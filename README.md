@@ -304,6 +304,8 @@ GitHub 一键 Fork 即可使用，无需编程基础。
 
 **💡 提示：** 想要**实时更新**的网页版？fork 后，进入你的仓库 Settings → Pages，启用 GitHub Pages。[效果预览](https://sansan0.github.io/TrendRadar/)。
 
+📖 **完整部署指南：** [GitHub Pages 部署文档](docs/GITHUB_PAGES_DEPLOYMENT.md) - 包含独立部署、集成到现有项目、自定义域名等详细教程
+
 ### **减少 APP 依赖**
 
 从"被算法推荐绑架"变成"主动获取自己想要的信息"
