@@ -2,9 +2,36 @@
 
 本文档是专门为 `conf-haolee.github.io` 博客集成 TrendRadar 的快速指南。
 
+## ⚠️ 前提条件（必须先完成）
+
+在开始集成之前，请确保：
+
+1. **已经 Fork 了 TrendRadar 项目**
+   - 访问 https://github.com/sansan0/TrendRadar 并点击 Fork
+   - Fork 后的仓库地址应该是：https://github.com/conf-haolee/TrendRadar
+
+2. **已启用 GitHub Pages**
+   - 进入您 fork 的 TrendRadar 仓库
+   - 点击 Settings → Pages（左侧菜单）
+   - 在 "Build and deployment" 部分：
+     - Source: 选择 "Deploy from a branch"
+     - Branch: 选择 "main" 分支，目录选择 "/ (root)"
+     - 点击 Save 保存
+   - 等待 1-2 分钟，页面上方会显示 "Your site is live at https://conf-haolee.github.io/TrendRadar/"
+
+3. **已配置并运行过爬虫**
+   - 在 TrendRadar 仓库中配置 `config/config.yaml` 和 `config/frequency_words.txt`
+   - 运行一次 GitHub Actions 工作流（Actions → Hot News Crawler → Run workflow）
+   - 等待工作流完成，确认生成了 `index.html` 和 `output/` 目录
+
+4. **验证 TrendRadar 是否正常工作**
+   - 访问 https://conf-haolee.github.io/TrendRadar/
+   - 应该能看到热点新闻分析页面
+   - **如果这一步看不到内容，请先解决 TrendRadar 本身的配置问题，再继续集成**
+
 ## 🎯 最简单的方式（推荐）：iframe 嵌入
 
-只需 3 步，5 分钟内完成：
+确认上述前提条件都满足后，只需 3 步，5 分钟内完成：
 
 ### 步骤 1️⃣：创建 TrendRadar 页面
 
@@ -94,8 +121,31 @@ cat TrendRadar/docs/hexo-page-example.md
 
 常见问题：
 
-**Q: iframe 显示空白？**  
-A: 检查 TrendRadar 的 GitHub Pages 是否已启用并正常工作。
+**Q: iframe 显示空白或无法加载？**  
+A: 请按以下步骤排查：
+1. 先访问 https://conf-haolee.github.io/TrendRadar/ 确认 TrendRadar 本身是否正常显示
+2. 如果 TrendRadar 页面本身显示空白：
+   - 检查是否已在 Settings → Pages 中启用 GitHub Pages
+   - 检查是否已运行过爬虫工作流（Actions → Hot News Crawler）
+   - 检查工作流是否成功完成（绿色对勾）
+   - 查看仓库根目录是否有 `index.html` 文件
+3. 如果 TrendRadar 页面正常但 iframe 中不显示：
+   - 检查浏览器控制台是否有跨域错误
+   - 确认 iframe src 地址拼写正确（注意大小写：TrendRadar）
+   - 尝试在 iframe src 后添加时间戳避免缓存：`src="https://conf-haolee.github.io/TrendRadar/?t=123"`
+
+**Q: 显示的不是最新数据？**  
+A: TrendRadar 需要定期运行爬虫更新数据：
+- 爬虫默认每小时自动运行一次（通过 GitHub Actions）
+- 可以手动触发：进入 Actions → Hot News Crawler → Run workflow
+- 等待工作流完成后，数据会自动更新到 GitHub Pages
+
+**Q: GitHub Pages 显示 404？**  
+A: 
+1. 确认已在 Settings → Pages 中正确配置
+2. 分支选择 "main"，目录选择 "/ (root)"
+3. 等待几分钟让 GitHub Pages 构建完成
+4. 检查 Actions 标签页中的 "pages build and deployment" 工作流是否成功
 
 **Q: 页面高度不够？**  
 A: 调整 iframe 的 `height` 样式，例如改为 `120vh`。

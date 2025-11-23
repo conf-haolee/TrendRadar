@@ -13,9 +13,32 @@
 
 ## 前提条件
 
+在开始集成之前，请确保：
+
 1. 您已经有一个运行中的 Hexo 博客（例如：`conf-haolee.github.io`）
 2. 您已经 Fork 了 TrendRadar 项目并配置好 GitHub Actions
-3. TrendRadar 的 GitHub Pages 已经启用并正常工作
+3. **TrendRadar 的 GitHub Pages 已经启用并正常工作**
+
+### 如何验证 TrendRadar 是否正常工作？
+
+在集成到 Hexo 之前，请先确认 TrendRadar 本身能正常访问：
+
+1. **启用 GitHub Pages**
+   - 进入您 fork 的 TrendRadar 仓库
+   - 点击 Settings → Pages
+   - Source 选择 "Deploy from a branch"
+   - Branch 选择 "main"，目录选择 "/ (root)"
+   - 保存后等待 1-2 分钟
+
+2. **运行爬虫生成数据**
+   - 配置 `config/config.yaml` 和 `config/frequency_words.txt`
+   - 进入 Actions → Hot News Crawler → Run workflow 手动运行一次
+   - 等待工作流完成（显示绿色对勾）
+
+3. **验证页面可访问**
+   - 访问 `https://您的用户名.github.io/TrendRadar/`
+   - 应该能看到热点新闻分析页面
+   - **如果此步骤失败，请先解决 TrendRadar 的配置问题**
 
 ## 方案概述
 
@@ -254,7 +277,34 @@ title: 热点新闻聚合
 
 ## 常见问题
 
-### Q1: iframe 嵌入后页面显示不完整？
+### Q1: iframe 显示空白或无法加载内容？
+
+**A**: 请按以下步骤排查：
+
+1. **先测试 TrendRadar 本身**
+   - 直接访问 `https://您的用户名.github.io/TrendRadar/`
+   - 如果这里也是空白，说明 TrendRadar 本身有问题：
+     - 检查 Settings → Pages 是否已启用
+     - 检查是否运行过爬虫工作流（Actions → Hot News Crawler）
+     - 确认仓库根目录有 `index.html` 文件
+
+2. **检查 GitHub Pages 配置**
+   - 分支必须选择 "main"
+   - 目录必须选择 "/ (root)"
+   - 等待 GitHub Pages 部署完成（1-2 分钟）
+   - 查看 Actions 中的 "pages build and deployment" 是否成功
+
+3. **检查 iframe 配置**
+   - 确认 src 地址拼写正确（注意仓库名大小写）
+   - 检查浏览器控制台是否有错误信息
+   - 尝试添加时间戳避免缓存：`src="https://...?t=123"`
+
+4. **运行爬虫生成数据**
+   - 进入 Actions → Hot News Crawler → Run workflow
+   - 等待工作流完成
+   - 确认有新的 commit 生成
+
+### Q2: iframe 嵌入后页面显示不完整？
 
 **A**: 调整 iframe 的高度：
 
@@ -298,14 +348,23 @@ window.parent.postMessage({
 - 如果使用方案一（iframe），清除浏览器缓存即可
 - 如果使用方案二（子目录），需要重新运行 TrendRadar 的 GitHub Actions
 
-### Q4: 可以自定义 TrendRadar 的样式吗？
+### Q4: 显示的不是最新数据？
+
+**A**: 
+- TrendRadar 需要定期运行爬虫更新数据
+- 爬虫默认每小时自动运行一次（通过 GitHub Actions 的 cron 触发）
+- 可以手动触发更新：Actions → Hot News Crawler → Run workflow
+- 等待工作流完成后，数据会自动推送到 GitHub Pages
+- 如果使用 iframe 方案，刷新页面或清除缓存即可看到最新数据
+
+### Q5: 可以自定义 TrendRadar 的样式吗？
 
 **A**: 
 - 方案一：可以通过 CSS 覆盖 iframe 内的样式（受限）
 - 方案二：可以直接修改 TrendRadar 的样式文件
 - 方案三：完全自定义
 
-### Q5: 如何在博客首页展示最新热点？
+### Q6: 如何在博客首页展示最新热点？
 
 **A**: 可以使用 Hexo 插件或自定义组件，通过 AJAX 获取 TrendRadar 数据：
 

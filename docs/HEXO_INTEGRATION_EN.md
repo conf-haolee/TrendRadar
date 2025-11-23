@@ -13,9 +13,32 @@ This document provides detailed instructions on how to integrate the TrendRadar 
 
 ## Prerequisites
 
+Before starting integration, ensure that:
+
 1. You have a running Hexo blog (e.g., `conf-haolee.github.io`)
 2. You have forked the TrendRadar project and configured GitHub Actions
-3. TrendRadar's GitHub Pages is enabled and working properly
+3. **TrendRadar's GitHub Pages is enabled and working properly**
+
+### How to verify TrendRadar is working?
+
+Before integrating with Hexo, confirm TrendRadar itself is accessible:
+
+1. **Enable GitHub Pages**
+   - Go to your forked TrendRadar repository
+   - Click Settings → Pages
+   - Source: select "Deploy from a branch"
+   - Branch: select "main", directory: "/ (root)"
+   - Save and wait 1-2 minutes
+
+2. **Run crawler to generate data**
+   - Configure `config/config.yaml` and `config/frequency_words.txt`
+   - Go to Actions → Hot News Crawler → Run workflow
+   - Wait for the workflow to complete (green checkmark)
+
+3. **Verify page is accessible**
+   - Visit `https://your-username.github.io/TrendRadar/`
+   - You should see the trending news analysis page
+   - **If this step fails, fix TrendRadar configuration first**
 
 ## Solution Overview
 
@@ -254,7 +277,34 @@ Based on different use cases:
 
 ## FAQ
 
-### Q1: iframe shows incomplete page?
+### Q1: iframe shows blank or fails to load content?
+
+**A**: Follow these troubleshooting steps:
+
+1. **Test TrendRadar directly**
+   - Visit `https://your-username.github.io/TrendRadar/` directly
+   - If this is also blank, TrendRadar itself has issues:
+     - Check Settings → Pages is enabled
+     - Check if crawler workflow has run (Actions → Hot News Crawler)
+     - Confirm `index.html` exists in repository root
+
+2. **Check GitHub Pages configuration**
+   - Branch must be "main"
+   - Directory must be "/ (root)"
+   - Wait for GitHub Pages to deploy (1-2 minutes)
+   - Check "pages build and deployment" workflow in Actions
+
+3. **Check iframe configuration**
+   - Confirm src URL spelling is correct (case-sensitive repository name)
+   - Check browser console for error messages
+   - Try adding timestamp to avoid cache: `src="https://...?t=123"`
+
+4. **Run crawler to generate data**
+   - Go to Actions → Hot News Crawler → Run workflow
+   - Wait for workflow completion
+   - Confirm new commits are generated
+
+### Q2: iframe shows incomplete page?
 
 **A**: Adjust iframe height:
 
@@ -298,14 +348,23 @@ window.parent.postMessage({
 - For Solution 1 (iframe), clear browser cache
 - For Solution 2 (subdirectory), re-run TrendRadar GitHub Actions
 
-### Q4: Can I customize TrendRadar styles?
+### Q4: Not showing latest data?
+
+**A**: 
+- TrendRadar needs to run crawler regularly to update data
+- Crawler runs automatically every hour (via GitHub Actions cron)
+- Can manually trigger: Actions → Hot News Crawler → Run workflow
+- After workflow completes, data is automatically pushed to GitHub Pages
+- For iframe solution, refresh page or clear cache to see latest data
+
+### Q5: Can I customize TrendRadar styles?
 
 **A**: 
 - Solution 1: Can override iframe styles via CSS (limited)
 - Solution 2: Can directly modify TrendRadar style files
 - Solution 3: Full customization
 
-### Q5: How to display latest trending news on blog homepage?
+### Q6: How to display latest trending news on blog homepage?
 
 **A**: Use Hexo plugin or custom component to fetch TrendRadar data via AJAX:
 
