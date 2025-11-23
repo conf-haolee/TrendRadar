@@ -1,0 +1,190 @@
+# TrendRadar 自动部署到 Hexo 博客的 GitHub Actions 工作流示例
+# 
+# 此文件展示如何将 TrendRadar 生成的内容自动推送到 Hexo 博客仓库
+# 
+# 使用方法：
+# 1. 将此文件的内容添加到 .github/workflows/crawler.yml 的最后
+# 2. 在 GitHub 创建 Personal Access Token（需要 repo 权限）
+# 3. 在 TrendRadar 仓库的 Settings → Secrets → Actions 中添加 HEXO_REPO_TOKEN
+# 4. 修改下面的 conf-haolee/conf-haolee.github.io 为您的博客仓库地址
+# 5. 确保您的 Hexo 配置文件中已添加 skip_render: - trendradar/**
+
+name: Deploy TrendRadar to Hexo Blog
+
+# 在主 crawler 工作流之后添加此步骤
+jobs:
+  deploy-to-hexo:
+    runs-on: ubuntu-latest
+    needs: crawl  # 依赖主爬虫任务完成
+    
+    steps:
+      - name: Checkout TrendRadar repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # 获取完整历史以便复制所有文件
+      
+      - name: Clone Hexo blog repository
+        env:
+          HEXO_REPO_TOKEN: ${{ secrets.HEXO_REPO_TOKEN }}
+        run: |
+          echo "📦 克隆 Hexo 博客仓库..."
+          git clone https://${HEXO_REPO_TOKEN}@github.com/conf-haolee/conf-haolee.github.io.git hexo-blog
+      
+      - name: Copy TrendRadar files to Hexo
+        run: |
+          echo "📋 复制 TrendRadar 文件..."
+          
+          # 创建 trendradar 目录
+          mkdir -p hexo-blog/source/trendradar
+          
+          # 复制主页面
+          cp index.html hexo-blog/source/trendradar/
+          
+          # 复制输出目录（包含历史数据）
+          if [ -d "output" ]; then
+            cp -r output hexo-blog/source/trendradar/
+          fi
+          
+          # 复制图片资源（如果有）
+          if [ -d "_image" ]; then
+            cp -r _image hexo-blog/source/trendradar/
+          fi
+          
+          echo "✅ 文件复制完成"
+          
+      - name: Create .nojekyll file
+        run: |
+          # 确保 GitHub Pages 不会忽略下划线开头的文件夹
+          touch hexo-blog/source/trendradar/.nojekyll
+      
+      - name: Commit and push to Hexo blog
+        working-directory: hexo-blog
+        run: |
+          echo "🚀 提交并推送到 Hexo 博客..."
+          
+          # 配置 Git
+          git config user.name 'TrendRadar Bot'
+          git config user.email 'bot@trendradar.com'
+          
+          # 添加所有更改
+          git add source/trendradar
+          
+          # 检查是否有更改
+          if git diff --staged --quiet; then
+            echo "ℹ️ 没有新的更改"
+          else
+            # 提交更改
+            COMMIT_TIME=$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S')
+            git commit -m "🔄 Update TrendRadar: ${COMMIT_TIME}"
+            
+            # 推送到远程仓库
+            git push
+            
+            echo "✅ TrendRadar 已成功部署到 Hexo 博客"
+          fi
+      
+      - name: Summary
+        run: |
+          echo "================================================"
+          echo "✨ TrendRadar 部署完成！"
+          echo "================================================"
+          echo "访问地址: https://conf-haolee.github.io/trendradar/"
+          echo "================================================"
+
+# ============================================
+# 完整的集成示例（替换整个 crawler.yml）
+# ============================================
+
+# name: Hot News Crawler with Hexo Deployment
+# 
+# on:
+#   schedule:
+#     - cron: "0 * * * *"
+#   workflow_dispatch:
+# 
+# permissions:
+#   contents: write
+# 
+# jobs:
+#   crawl:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+#       
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: "3.10"
+#       
+#       - name: Install dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
+#       
+#       - name: Verify required files
+#         run: |
+#           echo "🔍 检查必需的配置文件..."
+#           if [ ! -f config/config.yaml ]; then
+#             echo "❌ 错误: config/config.yaml 文件不存在"
+#             exit 1
+#           fi
+#           if [ ! -f config/frequency_words.txt ]; then
+#             echo "❌ 错误: config/frequency_words.txt 文件不存在"
+#             exit 1
+#           fi
+#           echo "✅ 配置文件检查通过"
+#       
+#       - name: Run crawler
+#         env:
+#           FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+#           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+#           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+#           DINGTALK_WEBHOOK_URL: ${{ secrets.DINGTALK_WEBHOOK_URL }}
+#           WEWORK_WEBHOOK_URL: ${{ secrets.WEWORK_WEBHOOK_URL }}
+#           WEWORK_MSG_TYPE: ${{ secrets.WEWORK_MSG_TYPE }}
+#           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+#           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+#           EMAIL_TO: ${{ secrets.EMAIL_TO }}
+#           EMAIL_SMTP_SERVER: ${{ secrets.EMAIL_SMTP_SERVER }}
+#           EMAIL_SMTP_PORT: ${{ secrets.EMAIL_SMTP_PORT }}
+#           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+#           NTFY_SERVER_URL: ${{ secrets.NTFY_SERVER_URL }}
+#           NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
+#           GITHUB_ACTIONS: true
+#         run: python main.py
+#       
+#       - name: Commit and push if changes
+#         run: |
+#           git config --global user.name 'GitHub Actions'
+#           git config --global user.email 'actions@github.com'
+#           git add -A
+#           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update by GitHub Actions at $(TZ=Asia/Shanghai date)" && git push)
+#   
+#   deploy-to-hexo:
+#     runs-on: ubuntu-latest
+#     needs: crawl
+#     steps:
+#       - name: Checkout TrendRadar repository
+#         uses: actions/checkout@v3
+#       
+#       - name: Clone Hexo blog repository
+#         env:
+#           HEXO_REPO_TOKEN: ${{ secrets.HEXO_REPO_TOKEN }}
+#         run: |
+#           git clone https://${HEXO_REPO_TOKEN}@github.com/conf-haolee/conf-haolee.github.io.git hexo-blog
+#       
+#       - name: Copy and deploy
+#         working-directory: hexo-blog
+#         run: |
+#           mkdir -p source/trendradar
+#           cp ../index.html source/trendradar/
+#           cp -r ../output source/trendradar/ 2>/dev/null || true
+#           cp -r ../_image source/trendradar/ 2>/dev/null || true
+#           touch source/trendradar/.nojekyll
+#           
+#           git config user.name 'TrendRadar Bot'
+#           git config user.email 'bot@trendradar.com'
+#           git add source/trendradar
+#           git commit -m "Update TrendRadar: $(TZ=Asia/Shanghai date)" || exit 0
+#           git push
