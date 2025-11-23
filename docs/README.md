@@ -10,7 +10,8 @@
 |------|------|------|
 | [HEXO_INTEGRATION.md](HEXO_INTEGRATION.md) | 完整的 Hexo 集成指南，包含 3 种方案 | 中文 |
 | [HEXO_INTEGRATION_EN.md](HEXO_INTEGRATION_EN.md) | Hexo Integration Guide (English version) | English |
-| [QUICKSTART_conf-haolee.md](QUICKSTART_conf-haolee.md) | 针对 conf-haolee.github.io 的快速开始指南 | 中文 |
+| [QUICKSTART_conf-haolee.md](QUICKSTART_conf-haolee.md) | 针对 conf-haolee.github.io 的快速开始指南（方案一） | 中文 |
+| [METHOD2_DETAILED_GUIDE.md](METHOD2_DETAILED_GUIDE.md) | 方案二详细配置指南：部署到子目录（推荐进阶用户） | 中文 |
 | [hexo-page-example.md](hexo-page-example.md) | Hexo 页面模板示例（可直接使用） | 中文 |
 | [hexo-deployment-workflow.yml](hexo-deployment-workflow.yml) | GitHub Actions 自动部署工作流示例 | YAML |
 
@@ -18,21 +19,23 @@
 
 ### 如果你想...
 
-**5 分钟快速集成 TrendRadar 到 Hexo 博客**
+**5 分钟快速集成 TrendRadar 到 Hexo 博客（方案一）**
 → 查看 [QUICKSTART_conf-haolee.md](QUICKSTART_conf-haolee.md)（针对 conf-haolee.github.io）  
 → 或 [HEXO_INTEGRATION.md](HEXO_INTEGRATION.md) 的方案一
 
-**深度集成，SEO 优化**
-→ 查看 [HEXO_INTEGRATION.md](HEXO_INTEGRATION.md) 的方案二
+**深度集成，SEO 优化（方案二）**
+→ 查看 [METHOD2_DETAILED_GUIDE.md](METHOD2_DETAILED_GUIDE.md)（详细步骤）  
+→ 或 [HEXO_INTEGRATION.md](HEXO_INTEGRATION.md) 的方案二
 
-**完全自定义样式和功能**
+**完全自定义样式和功能（方案三）**
 → 查看 [HEXO_INTEGRATION.md](HEXO_INTEGRATION.md) 的方案三
 
 **直接使用现成的模板**
 → 复制 [hexo-page-example.md](hexo-page-example.md) 的内容
 
 **自动化部署到 Hexo**
-→ 参考 [hexo-deployment-workflow.yml](hexo-deployment-workflow.yml)
+→ 参考 [hexo-deployment-workflow.yml](hexo-deployment-workflow.yml)  
+→ 或查看 [METHOD2_DETAILED_GUIDE.md](METHOD2_DETAILED_GUIDE.md) 的完整配置
 
 ## 📖 详细说明
 
