@@ -28,7 +28,8 @@ jobs:
           HEXO_REPO_TOKEN: ${{ secrets.HEXO_REPO_TOKEN }}
         run: |
           echo "📦 克隆 Hexo 博客仓库..."
-          git clone https://${HEXO_REPO_TOKEN}@github.com/conf-haolee/conf-haolee.github.io.git hexo-blog
+          # 将下面的仓库地址替换为您的 Hexo 博客仓库
+          git clone https://${HEXO_REPO_TOKEN}@github.com/YOUR_USERNAME/YOUR_BLOG_REPO.git hexo-blog
       
       - name: Copy TrendRadar files to Hexo
         run: |
@@ -88,7 +89,8 @@ jobs:
           echo "================================================"
           echo "✨ TrendRadar 部署完成！"
           echo "================================================"
-          echo "访问地址: https://conf-haolee.github.io/trendradar/"
+          echo "访问地址: https://YOUR_USERNAME.github.io/trendradar/"
+          echo "注意：将 YOUR_USERNAME 替换为您的 GitHub 用户名"
           echo "================================================"
 
 # ============================================
@@ -172,7 +174,8 @@ jobs:
 #         env:
 #           HEXO_REPO_TOKEN: ${{ secrets.HEXO_REPO_TOKEN }}
 #         run: |
-#           git clone https://${HEXO_REPO_TOKEN}@github.com/conf-haolee/conf-haolee.github.io.git hexo-blog
+#           # 将下面的仓库地址替换为您的 Hexo 博客仓库
+#           git clone https://${HEXO_REPO_TOKEN}@github.com/YOUR_USERNAME/YOUR_BLOG_REPO.git hexo-blog
 #       
 #       - name: Copy and deploy
 #         working-directory: hexo-blog

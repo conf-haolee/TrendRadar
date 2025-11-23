@@ -18,7 +18,7 @@ comments: false
   <!-- TrendRadar iframe -->
   <iframe 
     id="trendradar-iframe"
-    src="https://你的用户名.github.io/TrendRadar/" 
+    src="https://YOUR_GITHUB_USERNAME.github.io/TrendRadar/" 
     style="display: none; width: 100%; height: 100vh; min-height: 800px; border: none; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"
     title="TrendRadar 新闻聚合"
     loading="lazy"
@@ -110,7 +110,7 @@ comments: false
 <!-- 
 使用说明：
 1. 将此文件保存为 source/trendradar/index.md
-2. 将 "你的用户名" 替换为您的 GitHub 用户名（例如：conf-haolee）
+2. 将 "YOUR_GITHUB_USERNAME" 替换为您的 GitHub 用户名（例如：conf-haolee）
 3. 运行 hexo clean && hexo generate && hexo deploy
 4. 在主题配置中添加导航菜单项
 

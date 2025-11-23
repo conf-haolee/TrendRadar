@@ -52,7 +52,7 @@ comments: false
 
 <div style="width: 100%; height: 100vh; min-height: 800px;">
   <iframe 
-    src="https://你的用户名.github.io/TrendRadar/" 
+    src="https://YOUR_GITHUB_USERNAME.github.io/TrendRadar/" 
     style="width: 100%; height: 100%; border: none;"
     title="TrendRadar 新闻聚合"
     loading="lazy">
@@ -70,7 +70,7 @@ comments: false
 </style>
 ```
 
-**注意**：将 `你的用户名` 替换为您的 GitHub 用户名（例如：`conf-haolee`）
+**注意**：将 `YOUR_GITHUB_USERNAME` 替换为您的 GitHub 用户名（例如：`conf-haolee`）
 
 ### 步骤 3：添加到导航菜单
 
@@ -122,8 +122,8 @@ hexo deploy
         env:
           HEXO_REPO_TOKEN: ${{ secrets.HEXO_REPO_TOKEN }}
         run: |
-          # 克隆您的 Hexo 博客仓库
-          git clone https://${HEXO_REPO_TOKEN}@github.com/conf-haolee/conf-haolee.github.io.git hexo-blog
+          # 克隆您的 Hexo 博客仓库（请替换为您的仓库地址）
+          git clone https://${HEXO_REPO_TOKEN}@github.com/YOUR_USERNAME/YOUR_BLOG_REPO.git hexo-blog
           
           # 创建 trendradar 目录
           mkdir -p hexo-blog/source/trendradar
@@ -260,7 +260,7 @@ title: 热点新闻聚合
 
 ```html
 <iframe 
-  src="https://你的用户名.github.io/TrendRadar/" 
+  src="https://YOUR_GITHUB_USERNAME.github.io/TrendRadar/" 
   style="width: 100%; height: 120vh; border: none;"
   title="TrendRadar 新闻聚合">
 </iframe>
@@ -273,7 +273,7 @@ title: 热点新闻聚合
 ```html
 <script>
 window.addEventListener('message', function(e) {
-  if (e.origin === 'https://你的用户名.github.io') {
+  if (e.origin === 'https://YOUR_GITHUB_USERNAME.github.io') {
     var iframe = document.querySelector('iframe');
     if (e.data.height) {
       iframe.style.height = e.data.height + 'px';
@@ -310,7 +310,7 @@ window.parent.postMessage({
 **A**: 可以使用 Hexo 插件或自定义组件，通过 AJAX 获取 TrendRadar 数据：
 
 ```javascript
-fetch('https://你的用户名.github.io/TrendRadar/output/最新日期/txt/report.txt')
+fetch('https://YOUR_GITHUB_USERNAME.github.io/TrendRadar/output/最新日期/txt/report.txt')
   .then(response => response.text())
   .then(data => {
     // 解析并显示数据
@@ -349,7 +349,7 @@ fetch('https://你的用户名.github.io/TrendRadar/output/最新日期/txt/repo
   <p>加载中...</p>
 </div>
 <iframe 
-  src="https://你的用户名.github.io/TrendRadar/" 
+  src="https://YOUR_GITHUB_USERNAME.github.io/TrendRadar/" 
   onload="document.getElementById('loading').style.display='none'"
   style="display: none; width: 100%; height: 100vh; border: none;">
 </iframe>

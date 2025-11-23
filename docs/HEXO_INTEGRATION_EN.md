@@ -52,7 +52,7 @@ comments: false
 
 <div style="width: 100%; height: 100vh; min-height: 800px;">
   <iframe 
-    src="https://your-username.github.io/TrendRadar/" 
+    src="https://YOUR_GITHUB_USERNAME.github.io/TrendRadar/" 
     style="width: 100%; height: 100%; border: none;"
     title="TrendRadar News Aggregation"
     loading="lazy">
@@ -70,7 +70,7 @@ comments: false
 </style>
 ```
 
-**Note**: Replace `your-username` with your GitHub username (e.g., `conf-haolee`)
+**Note**: Replace `YOUR_GITHUB_USERNAME` with your GitHub username (e.g., `conf-haolee`)
 
 ### Step 3: Add to Navigation Menu
 
@@ -122,8 +122,8 @@ In your forked TrendRadar repository, modify `.github/workflows/crawler.yml`:
         env:
           HEXO_REPO_TOKEN: ${{ secrets.HEXO_REPO_TOKEN }}
         run: |
-          # Clone your Hexo blog repository
-          git clone https://${HEXO_REPO_TOKEN}@github.com/conf-haolee/conf-haolee.github.io.git hexo-blog
+          # Clone your Hexo blog repository (replace with your repository URL)
+          git clone https://${HEXO_REPO_TOKEN}@github.com/YOUR_USERNAME/YOUR_BLOG_REPO.git hexo-blog
           
           # Create trendradar directory
           mkdir -p hexo-blog/source/trendradar
@@ -260,7 +260,7 @@ Based on different use cases:
 
 ```html
 <iframe 
-  src="https://your-username.github.io/TrendRadar/" 
+  src="https://YOUR_GITHUB_USERNAME.github.io/TrendRadar/" 
   style="width: 100%; height: 120vh; border: none;"
   title="TrendRadar News Aggregation">
 </iframe>
@@ -273,7 +273,7 @@ Based on different use cases:
 ```html
 <script>
 window.addEventListener('message', function(e) {
-  if (e.origin === 'https://your-username.github.io') {
+  if (e.origin === 'https://YOUR_GITHUB_USERNAME.github.io') {
     var iframe = document.querySelector('iframe');
     if (e.data.height) {
       iframe.style.height = e.data.height + 'px';
@@ -310,7 +310,7 @@ window.parent.postMessage({
 **A**: Use Hexo plugin or custom component to fetch TrendRadar data via AJAX:
 
 ```javascript
-fetch('https://your-username.github.io/TrendRadar/output/latest-date/txt/report.txt')
+fetch('https://YOUR_GITHUB_USERNAME.github.io/TrendRadar/output/latest-date/txt/report.txt')
   .then(response => response.text())
   .then(data => {
     // Parse and display data
@@ -349,7 +349,7 @@ Optimize for mobile display:
   <p>Loading...</p>
 </div>
 <iframe 
-  src="https://your-username.github.io/TrendRadar/" 
+  src="https://YOUR_GITHUB_USERNAME.github.io/TrendRadar/" 
   onload="document.getElementById('loading').style.display='none'"
   style="display: none; width: 100%; height: 100vh; border: none;">
 </iframe>
