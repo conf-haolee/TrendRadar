@@ -22,8 +22,8 @@ Welcome to TrendRadar Documentation Center! Here you'll find comprehensive guide
 ## 🎯 如何选择文档 / How to Choose Documentation
 
 ### 我是新手，只想快速部署 / I'm a beginner, just want quick deployment
-👉 **推荐 / Recommended**: 
-- [快速开始 (中文)](QUICK_START.md) 
+👉 **推荐 / Recommended**:
+- [快速开始 (中文)](QUICK_START.md)
 - [Quick Start (English)](QUICK_START_EN.md)
 
 ### 我要集成到现有网站 / I want to integrate with existing site

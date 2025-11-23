@@ -150,7 +150,7 @@ name: Sync News from TrendRadar
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # Check every 6 hours
+    - cron: '0 */6 * * *'  # Runs 4 times per day (0:00, 6:00, 12:00, 18:00)
   workflow_dispatch:  # Allow manual trigger
 
 permissions:
@@ -368,12 +368,27 @@ After a few minutes, visit your custom domain (e.g., `https://news.yourdomain.co
 
 **Method:**
 
-**Don't use GitHub's "Sync fork" feature**, manually update files instead:
+⚠️ **Don't use GitHub's "Sync fork" feature** for these reasons:
+- TrendRadar uses a specific upgrade approach, only updating certain files (like `main.py`)
+- Sync fork synchronizes all changes, which may cause config file conflicts
+- May overwrite your custom configurations (like `config.yaml`, `frequency_words.txt`)
+
+**Recommended upgrade steps:**
 
 1. Visit [original project](https://github.com/sansan0/TrendRadar) to check changelog
 2. Copy files that need updating (usually `main.py`) according to version notes
 3. Update corresponding files in your repository
 4. Commit changes
+
+**Example (minor version upgrade):**
+
+```bash
+# 1. Copy latest main.py from original project
+# 2. Replace the file in your repository
+git add main.py
+git commit -m "Upgrade to v3.2.0"
+git push
+```
 
 ### Q4: Custom domain configuration keeps failing?
 
@@ -479,6 +494,19 @@ TrendRadar's page styles are defined in the `<style>` tag of `index.html`.
     background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
     /* Change to your preferred color */
     background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+}
+```
+
+**Tip**: Consider using CSS variables for theme colors to make customization easier:
+
+```css
+:root {
+    --primary-color-start: #4f46e5;
+    --primary-color-end: #7c3aed;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-color-start) 0%, var(--primary-color-end) 100%);
 }
 ```
 
