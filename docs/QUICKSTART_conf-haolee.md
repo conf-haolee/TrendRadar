@@ -95,6 +95,51 @@ hexo deploy
 
 现在访问 `https://conf-haolee.github.io/trendradar/` 即可查看嵌入的 TrendRadar 页面。
 
+## ⏱️ 关于数据更新机制
+
+**重要说明：TrendRadar 不是实时更新系统**
+
+TrendRadar 通过 GitHub Actions 定时运行爬虫来更新数据，而不是实时刷新：
+
+### 📊 更新频率
+
+- **默认更新频率**：每小时一次（通过 GitHub Actions 的 cron 自动触发）
+- **更新时间**：每小时的整点（如 8:00、9:00、10:00...）
+- **实际时间**：GitHub Actions 可能有 5-10 分钟的延迟
+
+### 🔄 如何查看最新数据
+
+**方法一：等待自动更新**
+- 爬虫会每小时自动运行
+- 查看 Actions 标签页，确认 "Hot News Crawler" 工作流是否在运行
+- 工作流完成后，刷新页面即可看到新数据
+
+**方法二：手动触发更新**
+1. 进入您的 TrendRadar 仓库：https://github.com/conf-haolee/TrendRadar
+2. 点击 Actions 标签页
+3. 选择 "Hot News Crawler" 工作流
+4. 点击右侧的 "Run workflow" 按钮
+5. 选择分支 "main"，点击 "Run workflow"
+6. 等待 2-3 分钟让工作流完成
+7. 刷新您的页面 `https://conf-haolee.github.io/trendradar/`
+
+### 📅 查看数据时间戳
+
+TrendRadar 页面的头部会显示"生成时间"，这是数据的最后更新时间，而不是当前时刻。
+
+### ⚙️ 自定义更新频率（可选）
+
+如果您想改变更新频率，可以修改 `.github/workflows/crawler.yml` 文件中的 cron 表达式：
+
+```yaml
+schedule:
+  - cron: "0 * * * *"    # 每小时一次（默认）
+  # - cron: "*/30 * * * *"  # 每30分钟一次
+  # - cron: "0 */2 * * *"   # 每2小时一次
+```
+
+**注意**：不建议设置过于频繁（如小于 30 分钟），以避免被 GitHub 限制资源。
+
 ## 📱 进阶优化（可选）
 
 如果想要更好的体验，可以使用增强版本的页面模板。参考项目中的示例文件：

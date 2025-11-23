@@ -256,6 +256,38 @@ title: Trending News Aggregation
 - ❌ Manual synchronization of TrendRadar updates
 - ❌ High maintenance cost
 
+## ⏱️ TrendRadar Data Update Mechanism
+
+**Important: TrendRadar is NOT a real-time system**
+
+Before integration, understand how TrendRadar updates data:
+
+### Update Method
+- **Scheduled Crawler**: Runs via GitHub Actions (default: hourly)
+- **Not Real-time**: Does not auto-refresh browser, requires manual refresh
+- **Auto-deploy**: Crawler automatically pushes updates to GitHub Pages
+
+### Update Frequency
+- Default: Every hour on the hour (e.g., 8:00, 9:00, 10:00...)
+- Customizable: Modify cron expression in `.github/workflows/crawler.yml`
+- GitHub Actions may have 5-10 minute delays
+
+### How to Get Latest Data
+
+**Automatic Update (Recommended):**
+- Wait for next hour, crawler runs automatically
+- Check Actions tab to confirm workflow completion
+- Refresh browser page
+
+**Manual Trigger:**
+1. Go to Actions → Hot News Crawler
+2. Click "Run workflow"
+3. Wait 2-3 minutes for completion
+4. Refresh page to see new data
+
+### Check Data Timestamp
+The "Generated Time" in page header shows last update time, not current time.
+
 ## Recommended Solutions Comparison
 
 Based on different use cases:
