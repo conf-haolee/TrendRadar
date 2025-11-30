@@ -241,6 +241,8 @@ One-click GitHub Fork to use, no programming required.
 
 **💡 Tip:** Want a **real-time updated** web version? After forking, go to your repo Settings → Pages and enable GitHub Pages. [Preview Effect](https://sansan0.github.io/TrendRadar/).
 
+📖 **Complete Deployment Guide:** [GitHub Pages Deployment Documentation](docs/GITHUB_PAGES_DEPLOYMENT_EN.md) - Includes standalone deployment, integration with existing projects, custom domain, and more
+
 ### **Reduce APP Dependencies**
 
 Transform from "algorithm recommendation captivity" to "actively getting the information you want"
