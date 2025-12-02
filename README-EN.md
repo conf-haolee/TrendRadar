@@ -47,7 +47,7 @@
 
 | [🚀 Quick Start](#-quick-start) | [🤖 AI Analysis](#-ai-analysis) | [⚙️ Configuration Guide](#configuration-guide) | [📝 Changelog](#-changelog) | [❓ FAQ & Support](#-faq--support) |
 |:---:|:---:|:---:|:---:|:---:|
-| [🐳 Docker Deployment](#-docker-deployment) | [🔌 MCP Clients](#-mcp-clients) | [⭐ Related Projects](#-related-projects) | [🪄 Sponsors](#-sponsors) | |
+| [🐳 Docker Deployment](#-docker-deployment) | [🔌 MCP Clients](#-mcp-clients) | [⭐ Related Projects](#-related-projects) | [🪄 Sponsors](#-sponsors) | [📦 Hexo Integration](docs/HEXO_INTEGRATION_EN.md) |
 
 </div>
 
